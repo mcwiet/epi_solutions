@@ -17,8 +17,8 @@ namespace Chapter5 {
 			if (a[i] < piv)
 				std::swap(a[small++], a[i]);
 		}
-		int large = a.size() - 1;
-		for (unsigned i = a.size() - 1; i >= small; --i) {
+		size_t large = a.size() - 1;
+		for (size_t i = a.size() - 1; i >= small; --i) {
 			if (a[i] > piv)
 				std::swap(a[large--], a[i]);
 		}

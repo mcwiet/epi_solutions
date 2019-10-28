@@ -27,13 +27,16 @@
     <ClCompile Include="c5_runner.cpp">
       <Filter>Source Files\Chapter 5</Filter>
     </ClCompile>
+    <ClCompile Include="c5p6.cpp">
+      <Filter>Source Files\Chapter 5</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IProblem.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="c5_problems.h">
       <Filter>Source Files\Chapter 5</Filter>
+    </ClInclude>
+    <ClInclude Include="Problem.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

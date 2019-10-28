@@ -2,16 +2,15 @@
 #include <string>
 #include <iostream>
 
-class IProblem {
+class Problem {
 public:
-	explicit IProblem(const std::string& name) : name_(name) {};
-	virtual ~IProblem() = default;
-
-	void PrintName() {
+	explicit Problem(const std::string& name) : name_(name) {
+		std::cout << std::endl;
 		std::cout << "==================================================================" << std::endl;
-		std::cout << "C5 P1" << std::endl;
+		std::cout << name_ << std::endl;
 		std::cout << "==================================================================" << std::endl;
-	}
+	};
+	virtual ~Problem() = default;
 private:
 	std::string name_ = "";
 };
