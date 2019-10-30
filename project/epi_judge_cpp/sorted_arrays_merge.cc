@@ -4,22 +4,31 @@
 #include "test_framework/generic_test.h"
 using std::vector;
 using std::priority_queue;
-vector<int> MergeSortedArrays(const vector<vector<int>>& sorted_arrays) {
-	int vals = 0;
-	for (auto& vec : sorted_arrays) {
-		for (auto& num : vec)
-			++vals;
+using std::greater;
+struct ArrayTracker {
+	bool operator>(const ArrayTracker& other) const {
+		return *current > * other.current;
 	}
 
-	priority_queue<int, vector<int>, std::greater<int>> nums(0, vals);
-	for (auto& vec : sorted_arrays) {
-		for (auto& num : vec)
-			nums.emplace(num);
+	vector<int>::const_iterator current;
+	vector<int>::const_iterator end;
+};
+
+vector<int> MergeSortedArrays(const vector<vector<int>>& sorted_arrays) {
+	priority_queue<ArrayTracker, vector<ArrayTracker>, greater<>> heap;
+
+	for (auto& arr : sorted_arrays) {
+		if (!arr.empty())
+			heap.emplace(ArrayTracker{ arr.cbegin(), arr.cend() });
 	}
+
 	vector<int> ret;
-	while (nums.size()) {
-		ret.push_back(nums.top());
-		nums.pop();
+	while (!heap.empty()) {
+		auto smallest = heap.top();
+		ret.emplace_back(*smallest.current);
+		if (next(smallest.current) != smallest.end)
+			heap.emplace(ArrayTracker{ next(smallest.current), smallest.end });
+		heap.pop();
 	}
 
 	return ret;
