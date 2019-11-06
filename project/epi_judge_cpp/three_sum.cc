@@ -1,21 +1,25 @@
 #include <vector>
-#include <unordered_set>
 #include "test_framework/generic_test.h"
 using std::vector;
-using std::unordered_set;
 
 bool HasThreeSum(vector<int> A, int t) {
-	unordered_set<int> nums(A.begin(), A.end());
-	int count = 0;
+	sort(A.begin(), A.end());
 
-	for (auto i = nums.begin(); i != nums.end(); ++i) {
-		for (auto j = i; j != nums.end(); ++j) {
-			if (nums.find(t - (*i + *j)) != nums.end())
-				++count;
+	for (auto current : A) {
+		int low = 0;
+		int high = A.size() - 1;
+		while (low <= high) {
+			int diff = (A[low] + A[high]) - (t - current);
+			if (diff == 0)
+				return true;
+			else if (diff < 0)
+				++low;
+			else
+				--high;
 		}
 	}
 
-	return count;
+	return false;
 }
 
 int main(int argc, char* argv[]) {
