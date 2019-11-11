@@ -3,13 +3,17 @@
 using std::string;
 
 string ConvertBase(const string& num_as_string, int b1, int b2) {
-  // TODO - you fill in here.
-  return "";
+	string ret;
+
+	for (auto& num : num_as_string) {
+	}
+
+	return "";
 }
 
 int main(int argc, char* argv[]) {
-  std::vector<std::string> args{argv + 1, argv + argc};
-  std::vector<std::string> param_names{"num_as_string", "b1", "b2"};
-  return GenericTestMain(args, "convert_base.cc", "convert_base.tsv",
-                         &ConvertBase, DefaultComparator{}, param_names);
+	std::vector<std::string> args{ argv + 1, argv + argc };
+	std::vector<std::string> param_names{ "num_as_string", "b1", "b2" };
+	return GenericTestMain(args, "convert_base.cc", "convert_base.tsv",
+		&ConvertBase, DefaultComparator{}, param_names);
 }
