@@ -1,25 +1,41 @@
 #include <memory>
-#include <unordered_set>
 #include "list_node.h"
 #include "test_framework/generic_test.h"
 #include "test_framework/test_failure.h"
 #include "test_framework/timed_executor.h"
 using std::shared_ptr;
-using std::unordered_set;
 
 shared_ptr<ListNode<int>> OverlappingNoCycleLists(
 	shared_ptr<ListNode<int>> l0, shared_ptr<ListNode<int>> l1) {
-	unordered_set<shared_ptr<ListNode<int>>> l0_nodes;
+	int l0_length = 0, l1_length = 0;
+	auto l0_temp = l0, l1_temp = l1;
 
-	while (l0 != nullptr) {
-		l0_nodes.insert(l0);
-		l0 = l0->next;
+	while (l0_temp != nullptr) {
+		l0_temp = l0_temp->next;
+		++l0_length;
+	}
+	while (l1_temp != nullptr) {
+		l1_temp = l1_temp->next;
+		++l1_length;
 	}
 
-	while (l0_nodes.find(l1) == l0_nodes.end() && l1 != nullptr)
-		l1 = l1->next;
+	auto long_list = (l0_length > l1_length) ? l0 : l1;
+	auto short_list = (l0_length > l1_length) ? l1 : l0;
+	auto long_length = std::max(l0_length, l1_length);
+	auto short_length = std::min(l0_length, l1_length);
 
-	return l1;
+	while (long_length > short_length) {
+		long_list = long_list->next;
+		--long_length;
+	}
+
+	while (long_list != nullptr) {
+		if (long_list == short_list)
+			return long_list;
+		long_list = long_list->next;
+		short_list = short_list->next;
+	}
+	return nullptr;
 }
 void OverlappingNoCycleListsWrapper(TimedExecutor& executor,
 	shared_ptr<ListNode<int>> l0,
